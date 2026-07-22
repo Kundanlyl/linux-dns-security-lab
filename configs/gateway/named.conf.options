@@ -1,0 +1,30 @@
+options {
+    directory "/var/cache/bind";
+
+    // CIS 2.6, 2.7, 2.8
+    version "none";
+    hostname "none";
+    server-id "none";
+
+    // CIS 3.2, 3.3
+    recursion yes;
+    allow-query { localhost; 192.168.14.10; 192.168.14.18; };
+    allow-recursion { localhost; 192.168.14.10; 192.168.14.18; };
+
+    // CIS 3.4
+    allow-transfer { none; };
+
+    // CIS 3.1 - blackhole private ranges, leaving out 192.168/16 per lab note
+    blackhole {
+        10.0.0.0/8;
+        172.16.0.0/12;
+    };
+
+    // use root servers directly, not forwarders
+    forwarders { };
+
+    dnssec-validation auto;
+
+    listen-on { 127.0.0.1; 192.168.14.5; };
+    listen-on-v6 { none; };
+};
