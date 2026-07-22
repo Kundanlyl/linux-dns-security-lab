@@ -1,0 +1,26 @@
+# BIND private/key/journal/generated files
+*.private
+*.jnl
+*.jbk
+*.signed
+*.signed.jnl
+*.state
+managed-keys.bind*
+rndc.key
+
+# TSIG/update keys
+update-key.key
+primary-secondary1.key
+xfer.key
+demo.key
+*.secret
+
+# DNSSEC generated key files
+K*.private
+K*.key
+
+# Backups/temp
+*.bak
+*.backup
+*~
+.DS_Store
