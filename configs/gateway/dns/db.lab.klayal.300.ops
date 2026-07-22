@@ -1,0 +1,15 @@
+$TTL 86400
+@   IN SOA dns.lab.example.internal. admin.lab.example.internal. (
+        2026072201
+        604800
+        86400
+        2419200
+        604800 )
+
+    IN NS dns.lab.example.internal.
+
+dns      IN A 192.168.50.10
+gateway  IN A 192.168.50.5
+client1  IN A 192.168.50.15
+client2  IN A 192.168.50.16
+client3  IN A 192.168.50.17
