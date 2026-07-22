@@ -1,26 +1,37 @@
-//
-// Do any local configuration here
-//
-//forward zone
+acl labnet {
+    127.0.0.1;
+    192.168.14.0/24;
+};
 
-zone "lab.klayal.300.ops" {
-    type master;
-    file "/var/cache/bind/db.lab.klayal.300.ops";
-    allow-transfer { key "primary-secondary1"; };
-    allow-update { key "update-key"; };
-    notify yes;
-    dnssec-policy default;
-//    inline-signing yes;
+options {
+    directory "/var/cache/bind";
+
+    // CIS 2.6, 2.7, 2.8
+    version "none";
+    hostname "none";
+    server-id "none";
+
+    // CIS 3.2, 3.3
+    recursion yes;
+    allow-query { labnet; };
+    allow-recursion { labnet; };
+
+    // CIS 3.4 
+   allow-transfer { none; };
+
+    // CIS 3.1
+    blackhole {
+        10.0.0.0/8;
+        172.16.0.0/12;
+    };
+
+    // forward outside queries to gateway only
+
+//    forwarders { 192.168.14.5; };
+ //   forward only;
+
+    dnssec-validation auto;
+
+    listen-on { 127.0.0.1; 192.168.14.10; };
+    listen-on-v6 { none; };
 };
-//reverse zone
-zone "14.168.192.in-addr.arpa" {
-    type master;
-    file "/var/cache/bind/db.14.168.192";
-    allow-transfer { key "primary-secondary1"; };
-    allow-update { key "update-key"; };
-    notify yes;
-    dnssec-policy default;
-};
-// Consider adding the 1918 zones here, if they are not used in your
-// organization
-//include "/etc/bind/zones.rfc1918";
