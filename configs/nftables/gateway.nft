@@ -1,0 +1,55 @@
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+#a2
+#table inet nat {
+#	chain prerouting {
+#		type nat hook prerouting priority dstnat; policy accept;
+#		iif "ens33" tcp dport 25 dnat ip to 192.168.173.203:25
+#	}
+#}
+table inet filter {
+	chain input {
+		type filter hook input priority filter; policy drop;
+		iif "lo" accept
+		ct state established,related accept
+		ip saddr {192.168.14.0/24} ip protocol icmp accept
+		ip saddr {192.168.14.0/24} tcp dport { 22, 53 } accept
+	        ip saddr {192.168.14.10/24} udp dport 53 accept
+		ip saddr {192.168.14.10/24} tcp dport 53 accept
+#		ip saddr {192.168.127.0/24} tcp dport 22 accept # note this is my own host network - to ssh files between my host machine and vms, secure internal network
+	}
+	chain forward {
+		type filter hook forward priority filter; policy drop;
+		ct state established,related accept
+#		ip daddr 192.168.173.203 tcp dport 25 ct state new accept
+#		ip saddr {192.168.14.0/24} udp dport 53 accept
+#		ip daddr {192.168.14.0/24} tcp dport 53 accept
+#		ip saddr { 192.168.73.0/24, 192.168.173.0/24 } tcp dport { 80, 443 } accept
+		ip saddr {192.168.14.0/24} oif "ens33" accept
+	}
+	chain output {
+		type filter hook output priority filter; policy drop;
+		ct state established, related accept
+		oif "lo" accept
+#		oif "ens33" accept
+	        ip daddr {192.168.14.0/24} tcp dport 22 accept
+		ip daddr {192.168.14.0/24} udp dport 53 accept
+#
+		ip protocol icmp accept
+		tcp dport 53 accept
+		udp dport 53 accept
+		udp sport 53 accept
+		tcp dport { 80, 443 } accept
+		ct state established,related accept
+
+	}
+}
+
+table inet nat {
+	chain postrouting {
+		type nat hook postrouting priority srcnat; policy accept;
+		oif "ens33" masquerade
+	}
+}
