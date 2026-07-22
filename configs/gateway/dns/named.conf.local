@@ -1,0 +1,28 @@
+//
+// Do any local configuration here
+//
+//forward zone
+//include "/etc/bind/xfer.key";
+
+
+zone "lab.klayal.300.ops" {
+    type master;
+    file "/var/cache/bind/db.lab.klayal.300.ops";
+    allow-transfer { key "primary-secondary1"; };
+    allow-update { key "update-key"; };
+    notify yes;
+    dnssec-policy default;
+//    inline-signing yes;
+};
+//reverse zone
+zone "14.168.192.in-addr.arpa" {
+    type master;
+    file "/var/cache/bind/db.14.168.192";
+    allow-transfer { key "primary-secondary1"; };
+    allow-update { key "update-key"; };
+    notify yes;
+    dnssec-policy default;
+};
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
