@@ -1,0 +1,23 @@
+; BIND data file for klayal.300.ops. for lab3 ops300 glue zones
+; According to ubuntu website
+$TTL    604800
+@       IN      SOA     gateway.klayal.300.ops. root.klayal.300.ops. (
+                         2025102405     ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+; name servers
+@       IN      NS      gateway.klayal.300.ops.
+lab.klayal.300.ops.	IN 	NS 	dns.lab.klayal.300.ops.
+
+;host records and Glue records
+gateway	IN A 192.168.14.5
+dns.lab.klayal.300.ops. IN A 192.168.14.10 ; glue record 
+
+
+; correct glue records but will recieve timeout or connection errors if these VMs are off
+assign.klayal.300.ops.	IN	NS	pri-dns.assign.klayal.300.ops.
+assign.klayal.300.ops.	IN	NS	sec-dns.assign.klayal.300.ops.
+pri-dns.assign.klayal.300.ops.  IN  A   192.168.173.201
+sec-dns.assign.klayal.300.ops.  IN  A   192.168.173.202
