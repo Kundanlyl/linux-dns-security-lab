@@ -8,8 +8,8 @@ options {
 
     // CIS 3.2, 3.3
     recursion yes;
-    allow-query { localhost; 192.168.14.10; 192.168.14.18; };
-    allow-recursion { localhost; 192.168.14.10; 192.168.14.18; };
+    allow-query { localhost; 192.168.50.10; 192.168.50.18; };
+    allow-recursion { localhost; 192.168.50.10; 192.168.50.18; };
 
     // CIS 3.4
     allow-transfer { none; };
@@ -25,6 +25,6 @@ options {
 
     dnssec-validation auto;
 
-    listen-on { 127.0.0.1; 192.168.14.5; };
+    listen-on { 127.0.0.1; 192.168.50.5; };
     listen-on-v6 { none; };
 };
