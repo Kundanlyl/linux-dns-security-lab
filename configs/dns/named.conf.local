@@ -15,9 +15,9 @@ zone "lab.klayal.300.ops" {
 //    inline-signing yes;
 };
 //reverse zone
-zone "14.168.192.in-addr.arpa" {
+zone "50.168.192.in-addr.arpa" {
     type master;
-    file "/var/cache/bind/db.14.168.192";
+    file "/var/cache/bind/db.50.168.192";
     allow-transfer { key "primary-secondary1"; };
     allow-update { key "update-key"; };
     notify yes;
