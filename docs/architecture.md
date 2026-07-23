@@ -1,53 +1,75 @@
+# `docs/architecture.md`
+
 # Architecture
 
 This lab models a small enterprise DNS environment using a parent DNS zone, a delegated child zone, an authoritative internal DNS server, and firewall controls.
 
-Components
-Gateway DNS Server
+## Components
+
+### Gateway DNS Server
 
 The gateway DNS server is authoritative for the parent zone:
 
+```text
 klayal.300.ops
+```
 
 Its main role is to hold the parent zone and delegate the child zone to the internal DNS server.
 
 Gateway IP:
 
+```text
 192.168.50.5
-Internal DNS Server
+```
+
+### Internal DNS Server
 
 The internal DNS server is authoritative for the child zone:
 
+```text
 lab.klayal.300.ops
+```
 
 It also hosts the reverse zone:
 
+```text
 50.168.192.in-addr.arpa
+```
 
 This server performs authoritative DNS service, DNSSEC signing, recursive DNSSEC validation, and TSIG-secured zone transfers.
 
 DNS server IP:
 
+```text
 192.168.50.10
-Client/Test Machines
+```
+
+### Client/Test Machines
 
 Client machines are used to test DNS resolution, hierarchy delegation, signed DNSSEC records, recursive validation, and resolver behavior.
 
 Example hosts:
 
+```text
 ad.lab.klayal.300.ops  - 192.168.50.6
 c1.lab.klayal.300.ops  - 192.168.50.15
 c2.lab.klayal.300.ops  - 192.168.50.16
 c3.lab.klayal.300.ops  - 192.168.50.17
-Network Flow
+```
+
+## Network Flow
 
 A client querying the child zone follows this path:
 
+```text
 Client → Gateway DNS → Child-zone delegation → Internal DNS Server
+```
 
 The gateway provides an NS delegation and glue A record so clients can locate the authoritative server for the child zone.
 
-DNS Roles
+## DNS Roles
+
+```text
 gateway.klayal.300.ops
 Authoritative for: klayal.300.ops
 
@@ -55,13 +77,19 @@ dns.lab.klayal.300.ops
 Authoritative for: lab.klayal.300.ops
 Authoritative for: 50.168.192.in-addr.arpa
 Recursive DNSSEC validation server
-Security Controls
+```
+
+## Security Controls
 
 The environment includes several DNS and network security controls:
 
-DNS service limited to expected networks
-SSH access restricted to internal hosts
-Zone transfers restricted with TSIG keys
-DNSSEC signing enabled on authoritative zones
-DNSSEC validation enabled on the recursive resolver
-nftables firewall rules controlling inbound, outbound, and forwarded traffic
+* DNS service limited to expected networks
+* SSH access restricted to internal hosts
+* Zone transfers restricted with TSIG keys
+* DNSSEC signing enabled on authoritative zones
+* DNSSEC validation enabled on the recursive resolver
+* nftables firewall rules controlling inbound, outbound, and forwarded traffic
+
+
+* Child zone records resolve from the internal DNS server
+* Reverse zone records resolve from the internal DNS server
