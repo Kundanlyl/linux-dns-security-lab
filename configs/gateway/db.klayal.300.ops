@@ -12,12 +12,12 @@ $TTL    604800
 lab.klayal.300.ops.	IN 	NS 	dns.lab.klayal.300.ops.
 
 ;host records and Glue records
-gateway	IN A 192.168.14.5
-dns.lab.klayal.300.ops. IN A 192.168.14.10 ; glue record 
+gateway	IN A 192.168.50.5
+dns.lab.klayal.300.ops. IN A 192.168.50.10 ; glue record 
 
 
 ; correct glue records but will recieve timeout or connection errors if these VMs are off
 assign.klayal.300.ops.	IN	NS	pri-dns.assign.klayal.300.ops.
 assign.klayal.300.ops.	IN	NS	sec-dns.assign.klayal.300.ops.
-pri-dns.assign.klayal.300.ops.  IN  A   192.168.173.201
-sec-dns.assign.klayal.300.ops.  IN  A   192.168.173.202
+pri-dns.assign.klayal.300.ops.  IN  A   192.168.150.201
+sec-dns.assign.klayal.300.ops.  IN  A   192.168.150.202
