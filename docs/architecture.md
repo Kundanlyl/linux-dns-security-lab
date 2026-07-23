@@ -1,4 +1,4 @@
-Architecture
+# Architecture
 
 This lab models a small enterprise DNS environment using a parent DNS zone, a delegated child zone, an authoritative internal DNS server, and firewall controls.
 
