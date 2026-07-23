@@ -1,5 +1,3 @@
-# `docs/troubleshooting.md`
-
 # Troubleshooting
 
 This document lists common issues encountered when configuring BIND9 DNS hierarchy, DNSSEC, TSIG zone transfers, and nftables.
