@@ -1,5 +1,4 @@
-# linux-dns-security-lab
-# Enterprise DNS and DNSSEC Lab
+# Linux DNS and DNSSEC Lab
 
 A Linux infrastructure security project demonstrating BIND9 DNS hierarchy, DNSSEC authoritative signing, recursive DNSSEC validation, TSIG-secured zone transfers, and nftables firewall policy design.
 
@@ -7,7 +6,9 @@ A Linux infrastructure security project demonstrating BIND9 DNS hierarchy, DNSSE
 
 This project documents a small enterprise-style DNS environment built with Ubuntu Server and BIND9. The lab simulates a parent DNS zone, a delegated internal child zone, signed authoritative DNS records, secure zone transfers, and firewall rules that restrict DNS and SSH access.
 
-The repository contains sanitized example configurations and documentation. Private keys, generated DNSSEC private material, journal files, signed runtime files, and raw submission outputs are intentionally excluded.
+The environment uses the parent zone `klayal.300.ops` and the delegated child zone `lab.klayal.300.ops`. The internal DNS server is also authoritative for the reverse zone `14.168.192.in-addr.arpa`.
+
+The repository contains sanitized configuration files and documentation. Private keys, generated DNSSEC private material, journal files, signed runtime files, and raw submission outputs are intentionally excluded.
 
 ## Goals
 
@@ -34,28 +35,31 @@ The main goals of this project are to:
 * rndc
 * dnssec-dsfromkey
 
-## Example Architecture
+## Architecture
 
-```text
-Client VM
+```text id="xmwwjp"
+Client/Test VM
    |
    v
 Gateway DNS Server
-Authoritative for: example.internal
+Authoritative for: klayal.300.ops
+IP: 192.168.14.5
    |
    v
 Internal DNS Server
-Authoritative for: lab.example.internal
+Authoritative for: lab.klayal.300.ops
+IP: 192.168.14.10
 ```
 
-Example sanitized network:
+Network layout:
 
-```text
-Gateway DNS: 192.168.50.5
-Internal DNS: 192.168.50.10
-Client 1: 192.168.50.15
-Client 2: 192.168.50.16
-Client 3: 192.168.50.17
+```text id="sk56hp"
+Gateway DNS: 192.168.14.5
+Internal DNS: 192.168.14.10
+AD: 192.168.14.6
+Client 1: 192.168.14.15
+Client 2: 192.168.14.16
+Client 3: 192.168.14.17
 ```
 
 ## Key Features
@@ -71,7 +75,7 @@ Client 3: 192.168.50.17
 
 ## Repository Structure
 
-```text
+```text id="tr8gi6"
 enterprise-dns-dnssec-lab/
 ├── README.md
 ├── docs/
@@ -103,11 +107,11 @@ enterprise-dns-dnssec-lab/
 
 ### Gateway DNS
 
-The gateway configuration demonstrates a parent DNS zone with a delegated child zone. The parent zone includes NS delegation and glue records so clients can locate the internal authoritative DNS server.
+The gateway DNS server is authoritative for the parent zone `klayal.300.ops`. It contains the delegation and glue records for the child zone `lab.klayal.300.ops`.
 
 Relevant files:
 
-```text
+```text id="fuzxwu"
 configs/gateway/named.conf.options
 configs/gateway/named.conf.local
 configs/gateway/db.parent.example
@@ -115,11 +119,11 @@ configs/gateway/db.parent.example
 
 ### Internal DNS Server
 
-The internal DNS server configuration demonstrates authoritative DNS hosting, dynamic-update-compatible zone storage, DNSSEC signing, and TSIG-secured zone transfers.
+The internal DNS server is authoritative for `lab.klayal.300.ops` and `14.168.192.in-addr.arpa`. It demonstrates authoritative DNS hosting, DNSSEC signing, dynamic-update-compatible zone storage, and TSIG-secured zone transfers.
 
 Relevant files:
 
-```text
+```text id="6dq7hb"
 configs/dns/named.conf.options
 configs/dns/named.conf.local
 configs/dns/db.lab.example
@@ -132,7 +136,7 @@ The firewall examples restrict inbound DNS and SSH, control forwarding behavior,
 
 Relevant files:
 
-```text
+```text id="keb4vy"
 configs/nftables/gateway.nft
 configs/nftables/dns.nft
 configs/nftables/client.nft
@@ -142,35 +146,36 @@ configs/nftables/client.nft
 
 DNS hierarchy:
 
-```bash
-dig @192.168.50.5 example.internal SOA
-dig @192.168.50.5 lab.example.internal SOA
-dig @192.168.50.10 lab.example.internal SOA
+```bash id="cy2lbt"
+dig @192.168.14.5 klayal.300.ops SOA
+dig @192.168.14.5 lab.klayal.300.ops SOA
+dig @192.168.14.10 lab.klayal.300.ops SOA
 ```
 
 DNSSEC authoritative records:
 
-```bash
-dig @192.168.50.10 lab.example.internal DNSKEY +dnssec
-dig @192.168.50.10 client1.lab.example.internal A +dnssec
+```bash id="mqlk5x"
+dig @192.168.14.10 lab.klayal.300.ops DNSKEY +dnssec
+dig @192.168.14.10 c1.lab.klayal.300.ops A +dnssec
+dig @192.168.14.10 lab.klayal.300.ops SOA +dnssec
 ```
 
 Recursive DNSSEC validation:
 
-```bash
-dig +tcp +dnssec @192.168.50.10 isc.org
-dig @192.168.50.10 www.dnssec-failed.org
+```bash id="2xcgcy"
+dig +tcp +dnssec @192.168.14.10 isc.org
+dig @192.168.14.10 www.dnssec-failed.org
 ```
 
 Expected results include authoritative answers, DNSKEY/RRSIG records for signed zones, the `ad` flag for validated external DNSSEC records, and `SERVFAIL` for intentionally broken DNSSEC domains.
 
 ## Security Note
 
-This repository uses sanitized example values. It does not include real private key material, generated runtime files, or raw submission output.
+This repository does not include private key material, generated runtime files, or raw submission output.
 
 Excluded examples:
 
-```text
+```text id="cjg7ws"
 *.private
 K*.private
 K*.key
