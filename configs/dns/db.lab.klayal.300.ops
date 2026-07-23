@@ -1,12 +1,12 @@
 $TTL 86400
-@   IN SOA dns.lab.example.internal. admin.lab.example.internal. (
+@   IN SOA dns.lab.klayal.internal. admin.lab.klayal.internal. (
         2026072201
         604800
         86400
         2419200
         604800 )
 
-    IN NS dns.lab.example.internal.
+    IN NS dns.lab.klayal.internal.
 
 dns      IN A 192.168.50.10
 gateway  IN A 192.168.50.5
