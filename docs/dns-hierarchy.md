@@ -1,4 +1,4 @@
-DNSSEC Validation
+# DNSSEC Validation
 
 This lab demonstrates both recursive DNSSEC validation and authoritative DNSSEC signing.
 
