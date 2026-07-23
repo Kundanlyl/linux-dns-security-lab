@@ -1,4 +1,4 @@
-# Linux DNS and DNSSEC Lab
+# Enterpise DNS and DNSSEC Lab
 
 A Linux infrastructure security project demonstrating BIND9 DNS hierarchy, DNSSEC authoritative signing, recursive DNSSEC validation, TSIG-secured zone transfers, and nftables firewall policy design.
 
