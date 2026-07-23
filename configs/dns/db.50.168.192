@@ -1,0 +1,15 @@
+$TTL 86400
+@   IN SOA dns.lab.klayal.internal. admin.lab.klayal.internal. (
+        2026072201 ; serial
+        604800     ; refresh
+        86400      ; retry
+        2419200    ; expire
+        604800 )   ; minimum
+
+    IN NS dns.lab.example.internal.
+
+5   IN PTR gateway.lab.klayal.internal.
+10  IN PTR dns.lab.klayal.internal.
+15  IN PTR client1.lab.klayal.internal.
+16  IN PTR client2.lab.klayal.internal.
+17  IN PTR client3.lab.klayal.internal.
