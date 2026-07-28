@@ -1,0 +1,32 @@
+c1@c1:~/ops300_summer_submissions$ bash verify-dns.sh
+
+============================================================
+DNS Hierarchy Verification
+============================================================
+
+[TEST] Parent zone SOA from gateway DNS
+[CMD ] dig @192.168.50.5 klayal.300.ops SOA +short
+[PASS] Found expected result: gateway.klayal.300.ops
+
+[TEST] Child zone delegation through gateway DNS
+[CMD ] dig @192.168.50.5 lab.klayal.300.ops NS +norecurse +noall +authority
+[PASS] Found expected result: dns.lab.klayal.300.ops
+
+[TEST] Child zone SOA directly from internal DNS
+[CMD ] dig @192.168.50.10 lab.klayal.300.ops SOA +short
+[PASS] Found expected result: dns.lab.klayal.300.ops
+
+[TEST] Forward host record from internal DNS
+[CMD ] dig @192.168.50.10 c1.lab.klayal.300.ops A +short
+[PASS] Found expected result: 192.168.14.15
+
+[TEST] Reverse PTR record from internal DNS
+[CMD ] dig @192.168.50.10 15.50.168.192.in-addr.arpa PTR +short
+[PASS] Found expected result: c1.lab.klayal.300.ops
+
+============================================================
+Summary
+============================================================
+Passed: 5
+Failed: 0
+[SUCCESS] DNS hierarchy verification completed successfully.
