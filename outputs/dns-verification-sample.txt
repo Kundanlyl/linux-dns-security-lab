@@ -1,4 +1,4 @@
-c1@c1:~/ops300_summer_submissions$ bash verify-dns.sh
+c1@c1:~$ bash verify-dns.sh
 
 ============================================================
 DNS Hierarchy Verification
