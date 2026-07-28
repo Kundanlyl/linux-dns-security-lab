@@ -169,6 +169,15 @@ dig @192.168.50.10 www.dnssec-failed.org
 
 Expected results include authoritative answers, DNSKEY/RRSIG records for signed zones, the `ad` flag for validated external DNSSEC records, and `SERVFAIL` for intentionally broken DNSSEC domains.
 
+## Sample Output
+
+Sample verification output is included in the `outputs/` directory.
+
+```text
+outputs/dns-verification-sample.txt
+outputs/dnssec-verification-sample.txt
+```
+
 ## Security Note
 
 This repository does not include private key material, generated runtime files, or raw submission output.
