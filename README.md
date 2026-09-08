@@ -6,7 +6,7 @@ A Linux infrastructure security project demonstrating BIND9 DNS hierarchy, DNSSE
 
 This project documents a small enterprise-style DNS environment built with Ubuntu Server and BIND9. The lab simulates a parent DNS zone, a delegated internal child zone, signed authoritative DNS records, secure zone transfers, and firewall rules that restrict DNS and SSH access.
 
-The environment uses the parent zone `klayal.300.ops` and the delegated child zone `lab.klayal.300.ops`. The internal DNS server is also authoritative for the sanitized reverse zone `50.168.192.in-addr.arpa`.
+The environment uses the parent zone `internal.lab` and the delegated child zone `internal.corp.lab`. The internal DNS server is also authoritative for the sanitized reverse zone `50.168.192.in-addr.arpa`.
 
 The repository contains sanitized configuration files and documentation. Private keys, generated DNSSEC private material, journal files, signed runtime files, and raw submission outputs are intentionally excluded.
 
@@ -42,12 +42,12 @@ Client/Test VM
    |
    v
 Gateway DNS Server
-Authoritative for: klayal.300.ops
+Authoritative for: gateway01.corp.internal.lab
 IP: 192.168.50.5
    |
    v
 Internal DNS Server
-Authoritative for: lab.klayal.300.ops
+Authoritative for: dns01.corp.internal.lab
 IP: 192.168.50.10
 ```
 
@@ -56,7 +56,6 @@ Network layout:
 ```text
 Gateway DNS: 192.168.50.5
 Internal DNS: 192.168.50.10
-AD: 192.168.50.6
 Client 1: 192.168.50.15
 Client 2: 192.168.50.16
 Client 3: 192.168.50.17
@@ -107,7 +106,7 @@ enterprise-dns-dnssec-lab/
 
 ### Gateway DNS
 
-The gateway DNS server is authoritative for the parent zone `klayal.300.ops`. It contains the delegation and glue records for the child zone `lab.klayal.300.ops`.
+The gateway DNS server is authoritative for the parent zone `corp.internal.lab`. It contains the delegation and glue records for the child zone `lab.klayal.300.ops`.
 
 Relevant files:
 
