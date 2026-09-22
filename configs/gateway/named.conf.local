@@ -1,6 +1,6 @@
-zone "klayal.300.ops" {
+zone "corp.example" {
     type master;
-    file "/etc/bind/db.klayal.300.ops";
+    file "/etc/bind/db.corp.example";
 
 };
 

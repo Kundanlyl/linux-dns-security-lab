@@ -54,9 +54,9 @@ dnssec-policy default;
 Example zone configuration:
 
 ```conf
-zone "lab.klayal.300.ops" {
+zone "lab.corp.example" {
     type primary;
-    file "/var/cache/bind/db.lab.klayal.300.ops";
+    file "/var/cache/bind/db.lab.corp.example";
     allow-transfer { key "primary-secondary1"; };
     allow-update { key "update-key"; };
     dnssec-policy default;
@@ -78,9 +78,9 @@ A signed authoritative zone should return DNSSEC records when queried with `+dns
 Example:
 
 ```bash
-dig @192.168.50.10 lab.klayal.300.ops DNSKEY +dnssec
-dig @192.168.50.10 c1.lab.klayal.300.ops A +dnssec
-dig @192.168.50.10 lab.klayal.300.ops SOA +dnssec
+dig @192.168.50.10 lab.corp.example DNSKEY +dnssec
+dig @192.168.50.10 client01.lab.corp.example A +dnssec
+dig @192.168.50.10 lab.corp.example SOA +dnssec
 ```
 
 Expected records:
@@ -96,7 +96,7 @@ NSEC
 BIND zone status can be checked with:
 
 ```bash
-sudo rndc zonestatus lab.klayal.300.ops
+sudo rndc zonestatus lab.corp.example
 sudo rndc zonestatus 50.168.192.in-addr.arpa
 ```
 
@@ -115,7 +115,7 @@ Before a full parent-chain DNSSEC configuration exists, a local trust anchor can
 Example:
 
 ```bash
-sudo delv @127.0.0.1 -a lab.klayal.300.ops.trust +root=lab.klayal.300.ops SOA lab.klayal.300.ops
+sudo delv @127.0.0.1 -a lab.corp.example.trust +root=lab.corp.example SOA lab.corp.example
 ```
 
 Expected result:

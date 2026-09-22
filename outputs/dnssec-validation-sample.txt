@@ -5,24 +5,24 @@ DNS Hierarchy Verification
 ============================================================
 
 [TEST] Parent zone SOA from gateway DNS
-[CMD ] dig @192.168.14.5 klayal.300.ops SOA +short
-[PASS] Found expected result: gateway.klayal.300.ops
+[CMD ] dig @192.168.14.5 corp.example SOA +short
+[PASS] Found expected result: gw01.corp.example
 
 [TEST] Child zone delegation through gateway DNS
-[CMD ] dig @192.168.14.5 lab.klayal.300.ops NS +norecurse +noall +authority
-[PASS] Found expected result: dns.lab.klayal.300.ops
+[CMD ] dig @192.168.14.5 lab.corp.example NS +norecurse +noall +authority
+[PASS] Found expected result: dns01.lab.corp.example
 
 [TEST] Child zone SOA directly from internal DNS
-[CMD ] dig @192.168.14.10 lab.klayal.300.ops SOA +short
-[PASS] Found expected result: dns.lab.klayal.300.ops
+[CMD ] dig @192.168.14.10 lab.corp.example SOA +short
+[PASS] Found expected result: dns01.lab.corp.example
 
 [TEST] Forward host record from internal DNS
-[CMD ] dig @192.168.14.10 c1.lab.klayal.300.ops A +short
+[CMD ] dig @192.168.14.10 client01.lab.corp.example A +short
 [PASS] Found expected result: 192.168.14.15
 
 [TEST] Reverse PTR record from internal DNS
 [CMD ] dig @192.168.14.10 15.14.168.192.in-addr.arpa PTR +short
-[PASS] Found expected result: c1.lab.klayal.300.ops
+[PASS] Found expected result: client01.lab.corp.example
 
 ============================================================
 Summary
@@ -30,24 +30,24 @@ Summary
 Passed: 5
 Failed: 0
 [SUCCESS] DNS hierarchy verification completed successfully.
-c1@c1:~/ops300_summer_submissions$ ls
+c1@c1:~/enterprise-lab_summer_submissions$ ls
 'lab1 (1).bash'   lab1-c1.txt   verify-dnssec.sh   verify-dns.sh
-c1@c1:~/ops300_summer_submissions$ bash verify-dnssec.sh
+c1@c1:~/enterprise-lab_summer_submissions$ bash verify-dnssec.sh
 
 ============================================================
 Authoritative DNSSEC Verification
 ============================================================
 
 [TEST] Child zone DNSKEY record exists
-[CMD ] dig @192.168.14.10 lab.klayal.300.ops DNSKEY +dnssec
+[CMD ] dig @192.168.14.10 lab.corp.example DNSKEY +dnssec
 [PASS] Found expected result: DNSKEY
 
 [TEST] Child zone returns RRSIG records
-[CMD ] dig @192.168.14.10 lab.klayal.300.ops SOA +dnssec
+[CMD ] dig @192.168.14.10 lab.corp.example SOA +dnssec
 [PASS] Found expected result: RRSIG
 
 [TEST] Signed host record returns RRSIG
-[CMD ] dig @192.168.14.10 c1.lab.klayal.300.ops A +dnssec
+[CMD ] dig @192.168.14.10 client01.lab.corp.example A +dnssec
 [PASS] Found expected result: RRSIG
 
 [TEST] Reverse zone DNSSEC records exist

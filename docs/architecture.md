@@ -9,7 +9,7 @@ This lab models a small enterprise DNS environment using a parent DNS zone, a de
 The gateway DNS server is authoritative for the parent zone:
 
 ```text
-klayal.300.ops
+corp.example
 ```
 
 Its main role is to hold the parent zone and delegate the child zone to the internal DNS server.
@@ -25,7 +25,7 @@ Gateway IP:
 The internal DNS server is authoritative for the child zone:
 
 ```text
-lab.klayal.300.ops
+lab.corp.example
 ```
 
 It also hosts the reverse zone:
@@ -49,10 +49,10 @@ Client machines are used to test DNS resolution, hierarchy delegation, signed DN
 Example hosts:
 
 ```text
-ad.lab.klayal.300.ops  - 192.168.50.6
-c1.lab.klayal.300.ops  - 192.168.50.15
-c2.lab.klayal.300.ops  - 192.168.50.16
-c3.lab.klayal.300.ops  - 192.168.50.17
+ad.lab.corp.example  - 192.168.50.6
+client01.lab.corp.example  - 192.168.50.15
+client02.lab.corp.example  - 192.168.50.16
+client03.lab.corp.example  - 192.168.50.17
 ```
 
 ## Network Flow
@@ -68,11 +68,11 @@ The gateway provides an NS delegation and glue A record so clients can locate th
 ## DNS Roles
 
 ```text
-gateway.klayal.300.ops
-Authoritative for: klayal.300.ops
+gw01.corp.example
+Authoritative for: corp.example
 
-dns.lab.klayal.300.ops
-Authoritative for: lab.klayal.300.ops
+dns01.lab.corp.example
+Authoritative for: lab.corp.example
 Authoritative for: 50.168.192.in-addr.arpa
 Recursive DNSSEC validation server
 ```

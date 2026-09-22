@@ -7,7 +7,7 @@ This document lists common issues encountered when configuring BIND9 DNS hierarc
 Problem:
 
 ```bash
-dig @127.0.0.1 klayal.300.ops SOA
+dig @127.0.0.1 corp.example SOA
 ```
 
 returns:
@@ -43,7 +43,7 @@ iif "lo" accept
 Problem:
 
 ```bash
-dig @127.0.0.1 lab.klayal.300.ops DNSKEY +dnssec
+dig @127.0.0.1 lab.corp.example DNSKEY +dnssec
 ```
 
 returns no DNSKEY or RRSIG records.
@@ -60,9 +60,9 @@ Checks:
 
 ```bash
 sudo named-checkconf
-sudo rndc zonestatus lab.klayal.300.ops
+sudo rndc zonestatus lab.corp.example
 sudo ls -lah /var/cache/bind
-dig @127.0.0.1 lab.klayal.300.ops SOA +norecurse
+dig @127.0.0.1 lab.corp.example SOA +norecurse
 ```
 
 Expected zone status includes:
@@ -84,7 +84,7 @@ aa
 Problem:
 
 ```bash
-dig AXFR lab.klayal.300.ops @192.168.50.10
+dig AXFR lab.corp.example @192.168.50.10
 ```
 
 returns:
@@ -100,7 +100,7 @@ Zone transfers require TSIG authentication.
 Use the correct key:
 
 ```bash
-sudo dig AXFR lab.klayal.300.ops @192.168.50.10 -k /etc/bind/keys/primary-secondary1.key
+sudo dig AXFR lab.corp.example @192.168.50.10 -k /etc/bind/keys/primary-secondary1.key
 ```
 
 Reverse zone:
@@ -163,14 +163,14 @@ This can break scripts that calculate the DNS domain from the host’s FQDN.
 Fix example:
 
 ```bash
-sudo hostnamectl set-hostname gateway.klayal.300.ops
+sudo hostnamectl set-hostname gw01.corp.example
 ```
 
 Then update `/etc/hosts`:
 
 ```text
-127.0.1.1 gateway.klayal.300.ops gateway
-192.168.50.5 gateway.klayal.300.ops gateway
+127.0.1.1 gw01.corp.example gateway
+192.168.50.5 gw01.corp.example gateway
 ```
 
 Expected:
@@ -180,5 +180,5 @@ hostname -d
 ```
 
 ```text
-klayal.300.ops
+corp.example
 ```

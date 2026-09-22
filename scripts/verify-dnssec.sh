@@ -6,12 +6,12 @@
 
 set -u
 
-CHILD_ZONE="lab.klayal.300.ops"
+CHILD_ZONE="lab.corp.example"
 REVERSE_ZONE="50.168.192.in-addr.arpa"
 
 INTERNAL_DNS="192.168.50.10"
 
-SIGNED_HOST="c1.lab.klayal.300.ops"
+SIGNED_HOST="client01.lab.corp.example"
 VALID_PUBLIC_DOMAIN="isc.org"
 BROKEN_DNSSEC_DOMAIN="www.dnssec-failed.org"
 

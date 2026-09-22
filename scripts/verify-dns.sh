@@ -2,18 +2,18 @@
 
 # verify-dns.sh
 # Basic DNS hierarchy verification for the Enterprise DNS/DNSSEC lab.
-# This script uses sanitized lab IPs and the lab.klayal.300.ops domain.
+# This script uses sanitized lab IPs and the lab.corp.example domain.
 
 set -u
 
-PARENT_ZONE="klayal.300.ops"
-CHILD_ZONE="lab.klayal.300.ops"
+PARENT_ZONE="corp.example"
+CHILD_ZONE="lab.corp.example"
 REVERSE_ZONE="50.168.192.in-addr.arpa"
 
 GATEWAY_DNS="192.168.50.5"
 INTERNAL_DNS="192.168.50.10"
 
-HOST_RECORD="c1.lab.klayal.300.ops"
+HOST_RECORD="client01.lab.corp.example"
 REVERSE_RECORD="15.50.168.192.in-addr.arpa"
 
 pass_count=0

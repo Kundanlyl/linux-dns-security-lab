@@ -5,9 +5,9 @@
 //include "/etc/bind/xfer.key";
 
 
-zone "lab.klayal.300.ops" {
+zone "lab.corp.example" {
     type master;
-    file "/var/cache/bind/db.lab.klayal.300.ops";
+    file "/var/cache/bind/db.lab.corp.example";
     allow-transfer { key "primary-secondary1"; };
     allow-update { key "update-key"; };
     notify yes;

@@ -5,24 +5,24 @@ DNS Hierarchy Verification
 ============================================================
 
 [TEST] Parent zone SOA from gateway DNS
-[CMD ] dig @192.168.50.5 klayal.300.ops SOA +short
-[PASS] Found expected result: gateway.klayal.300.ops
+[CMD ] dig @192.168.50.5 corp.example SOA +short
+[PASS] Found expected result: gw01.corp.example
 
 [TEST] Child zone delegation through gateway DNS
-[CMD ] dig @192.168.50.5 lab.klayal.300.ops NS +norecurse +noall +authority
-[PASS] Found expected result: dns.lab.klayal.300.ops
+[CMD ] dig @192.168.50.5 lab.corp.example NS +norecurse +noall +authority
+[PASS] Found expected result: dns01.lab.corp.example
 
 [TEST] Child zone SOA directly from internal DNS
-[CMD ] dig @192.168.50.10 lab.klayal.300.ops SOA +short
-[PASS] Found expected result: dns.lab.klayal.300.ops
+[CMD ] dig @192.168.50.10 lab.corp.example SOA +short
+[PASS] Found expected result: dns01.lab.corp.example
 
 [TEST] Forward host record from internal DNS
-[CMD ] dig @192.168.50.10 c1.lab.klayal.300.ops A +short
+[CMD ] dig @192.168.50.10 client01.lab.corp.example A +short
 [PASS] Found expected result: 192.168.14.15
 
 [TEST] Reverse PTR record from internal DNS
 [CMD ] dig @192.168.50.10 15.50.168.192.in-addr.arpa PTR +short
-[PASS] Found expected result: c1.lab.klayal.300.ops
+[PASS] Found expected result: client01.lab.corp.example
 
 ============================================================
 Summary

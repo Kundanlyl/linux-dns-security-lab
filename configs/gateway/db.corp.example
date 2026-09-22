@@ -1,0 +1,23 @@
+; BIND data file for corp.example. for parent-zone delegation and glue records
+; According to ubuntu website
+$TTL    604800
+@       IN      SOA     gw01.corp.example. root.corp.example. (
+                         2025102405     ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+; name servers
+@       IN      NS      gw01.corp.example.
+lab.corp.example.	IN 	NS 	dns01.lab.corp.example.
+
+;host records and Glue records
+gateway	IN A 192.168.50.5
+dns01.lab.corp.example. IN A 192.168.50.10 ; glue record 
+
+
+; correct glue records but will recieve timeout or connection errors if these VMs are off
+services.corp.example.	IN	NS	dns01.services.corp.example.
+services.corp.example.	IN	NS	dns02.services.corp.example.
+dns01.services.corp.example.  IN  A   192.168.150.201
+dns02.services.corp.example.  IN  A   192.168.150.202

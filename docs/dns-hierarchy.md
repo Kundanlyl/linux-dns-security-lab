@@ -7,7 +7,7 @@ This lab uses a parent DNS zone and a delegated child zone.
 The gateway DNS server is authoritative for the parent zone:
 
 ```text
-klayal.300.ops
+corp.example
 ```
 
 The parent zone contains its own SOA and NS records, plus a delegation for the child zone.
@@ -16,18 +16,18 @@ Example parent zone records:
 
 ```dns
 $TTL 86400
-@ IN SOA gateway.klayal.300.ops. root.klayal.300.ops. (
+@ IN SOA gw01.corp.example. root.corp.example. (
     2026072201
     604800
     86400
     2419200
     604800 )
 
-@       IN NS   gateway.klayal.300.ops.
+@       IN NS   gw01.corp.example.
 gateway IN A    192.168.50.5
 
-lab.klayal.300.ops.      IN NS dns.lab.klayal.300.ops.
-dns.lab.klayal.300.ops.  IN A  192.168.50.10
+lab.corp.example.      IN NS dns01.lab.corp.example.
+dns01.lab.corp.example.  IN A  192.168.50.10
 ```
 
 ## Child Zone
@@ -35,21 +35,21 @@ dns.lab.klayal.300.ops.  IN A  192.168.50.10
 The internal DNS server is authoritative for:
 
 ```text
-lab.klayal.300.ops
+lab.corp.example
 ```
 
 Example child zone records:
 
 ```dns
 $TTL 86400
-@ IN SOA dns.lab.klayal.300.ops. root.lab.klayal.300.ops. (
+@ IN SOA dns01.lab.corp.example. root.lab.corp.example. (
     2026072201
     604800
     86400
     2419200
     604800 )
 
-@   IN NS dns.lab.klayal.300.ops.
+@   IN NS dns01.lab.corp.example.
 
 dns IN A 192.168.50.10
 ad  IN A 192.168.50.6
@@ -70,21 +70,21 @@ Example reverse records:
 
 ```dns
 $TTL 86400
-@ IN SOA dns.lab.klayal.300.ops. root.lab.klayal.300.ops. (
+@ IN SOA dns01.lab.corp.example. root.lab.corp.example. (
     2026072201
     604800
     86400
     2419200
     604800 )
 
-@  IN NS dns.lab.klayal.300.ops.
+@  IN NS dns01.lab.corp.example.
 
-5  IN PTR gateway.klayal.300.ops.
-6  IN PTR ad.lab.klayal.300.ops.
-10 IN PTR dns.lab.klayal.300.ops.
-15 IN PTR c1.lab.klayal.300.ops.
-16 IN PTR c2.lab.klayal.300.ops.
-17 IN PTR c3.lab.klayal.300.ops.
+5  IN PTR gw01.corp.example.
+6  IN PTR ad.lab.corp.example.
+10 IN PTR dns01.lab.corp.example.
+15 IN PTR client01.lab.corp.example.
+16 IN PTR client02.lab.corp.example.
+17 IN PTR client03.lab.corp.example.
 ```
 
 ## Glue Records
@@ -94,13 +94,13 @@ The parent zone needs a glue record because the delegated nameserver is inside t
 Delegation:
 
 ```dns
-lab.klayal.300.ops. IN NS dns.lab.klayal.300.ops.
+lab.corp.example. IN NS dns01.lab.corp.example.
 ```
 
 Glue:
 
 ```dns
-dns.lab.klayal.300.ops. IN A 192.168.50.10
+dns01.lab.corp.example. IN A 192.168.50.10
 ```
 
 Without the glue record, a resolver may know which nameserver is responsible for the child zone but not know how to reach it.
@@ -110,10 +110,10 @@ Without the glue record, a resolver may know which nameserver is responsible for
 Example tests:
 
 ```bash
-dig @192.168.50.5 klayal.300.ops SOA
-dig @192.168.50.5 lab.klayal.300.ops SOA
-dig @192.168.50.10 lab.klayal.300.ops SOA
-dig @192.168.50.10 c1.lab.klayal.300.ops A
+dig @192.168.50.5 corp.example SOA
+dig @192.168.50.5 lab.corp.example SOA
+dig @192.168.50.10 lab.corp.example SOA
+dig @192.168.50.10 client01.lab.corp.example A
 ```
 
 Expected result:

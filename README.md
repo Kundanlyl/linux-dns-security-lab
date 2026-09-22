@@ -106,7 +106,7 @@ enterprise-dns-dnssec-lab/
 
 ### Gateway DNS
 
-The gateway DNS server is authoritative for the parent zone `corp.internal.lab`. It contains the delegation and glue records for the child zone `lab.klayal.300.ops`.
+The gateway DNS server is authoritative for the parent zone `corp.internal.lab`. It contains the delegation and glue records for the child zone `lab.corp.example`.
 
 Relevant files:
 
@@ -118,7 +118,7 @@ configs/gateway/db.parent.example
 
 ### Internal DNS Server
 
-The internal DNS server is authoritative for `lab.klayal.300.ops` and `50.168.192.in-addr.arpa`. It demonstrates authoritative DNS hosting, DNSSEC signing, dynamic-update-compatible zone storage, and TSIG-secured zone transfers.
+The internal DNS server is authoritative for `lab.corp.example` and `50.168.192.in-addr.arpa`. It demonstrates authoritative DNS hosting, DNSSEC signing, dynamic-update-compatible zone storage, and TSIG-secured zone transfers.
 
 Relevant files:
 
@@ -146,17 +146,17 @@ configs/nftables/client.nft
 DNS hierarchy:
 
 ```bash
-dig @192.168.50.5 klayal.300.ops SOA
-dig @192.168.50.5 lab.klayal.300.ops SOA
-dig @192.168.50.10 lab.klayal.300.ops SOA
+dig @192.168.50.5 corp.example SOA
+dig @192.168.50.5 lab.corp.example SOA
+dig @192.168.50.10 lab.corp.example SOA
 ```
 
 DNSSEC authoritative records:
 
 ```bash
-dig @192.168.50.10 lab.klayal.300.ops DNSKEY +dnssec
-dig @192.168.50.10 c1.lab.klayal.300.ops A +dnssec
-dig @192.168.50.10 lab.klayal.300.ops SOA +dnssec
+dig @192.168.50.10 lab.corp.example DNSKEY +dnssec
+dig @192.168.50.10 client01.lab.corp.example A +dnssec
+dig @192.168.50.10 lab.corp.example SOA +dnssec
 ```
 
 Recursive DNSSEC validation:
