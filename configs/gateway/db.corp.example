@@ -1,14 +1,14 @@
 ; BIND data file for corp.example. for parent-zone delegation and glue records
 ; According to ubuntu website
 $TTL    604800
-@       IN      SOA     gw01.corp.example. root.corp.example. (
+@       IN      SOA     gateway.corp.example. root.corp.example. (
                          2025102405     ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ; name servers
-@       IN      NS      gw01.corp.example.
+@       IN      NS     gateway.corp.example.
 lab.corp.example.	IN 	NS 	dns01.lab.corp.example.
 
 ;host records and Glue records
