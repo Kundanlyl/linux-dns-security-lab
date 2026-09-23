@@ -6,7 +6,7 @@ A Linux infrastructure security project demonstrating BIND9 DNS hierarchy, DNSSE
 
 This project documents a small enterprise-style DNS environment built with Ubuntu Server and BIND9. The lab simulates a parent DNS zone, a delegated internal child zone, signed authoritative DNS records, secure zone transfers, and firewall rules that restrict DNS and SSH access.
 
-The environment uses the parent zone `internal.lab` and the delegated child zone `internal.corp.lab`. The internal DNS server is also authoritative for the sanitized reverse zone `50.168.192.in-addr.arpa`.
+The environment uses the parent zone `corp.example` and the delegated child zone `lab.corp.example`. The internal DNS server is also authoritative for the sanitized reverse zone `50.168.192.in-addr.arpa`.
 
 The repository contains sanitized configuration files and documentation. Private keys, generated DNSSEC private material, journal files, signed runtime files, and raw submission outputs are intentionally excluded.
 
@@ -42,12 +42,12 @@ Client/Test VM
    |
    v
 Gateway DNS Server
-Authoritative for: gateway01.corp.internal.lab
+Authoritative for: gateway.corp.example
 IP: 192.168.50.5
    |
    v
 Internal DNS Server
-Authoritative for: dns01.corp.internal.lab
+Authoritative for: lab.corp.example
 IP: 192.168.50.10
 ```
 
@@ -106,7 +106,7 @@ enterprise-dns-dnssec-lab/
 
 ### Gateway DNS
 
-The gateway DNS server is authoritative for the parent zone `corp.internal.lab`. It contains the delegation and glue records for the child zone `lab.corp.example`.
+The gateway DNS server is authoritative for the parent zone `corp.example`. It contains the delegation and glue records for the child zone `lab.corp.example`.
 
 Relevant files:
 
